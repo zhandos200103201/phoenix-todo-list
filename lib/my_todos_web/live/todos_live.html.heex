@@ -1,0 +1,18 @@
+<.form for={:input} phx-submit="add">
+    <%= text_input :todo, :title, placeholder: "What do you want to get done?" %>
+    <%= submit "Add", phx_disable_with: "Adding..." %>
+</.form>
+
+<%= if Enum.count(@todos) > 0 do %>
+    <%= for todo <- @todos do %>
+        <div id="todo_item">
+            <div>
+                <%= checkbox(:todo, :done, phx_click: "toggle_done", phx_value_id: todo.id , value: todo.done) %>
+                <%= todo.title %>  
+            </div>
+            <%= link "Delete", to: "#", phx_click: "delete", phx_value_id: todo.id %>
+        </div>
+    <% end %>
+<% else %>
+    <h2>You don't have any tasks</h2>
+<% end %>
